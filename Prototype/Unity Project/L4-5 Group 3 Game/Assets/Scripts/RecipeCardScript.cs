@@ -5,6 +5,24 @@ using UnityEngine.UI;
 
 public class RecipeCardScript : MonoBehaviour {
 
+    GameManager GM = GameManager.Instance();
+
+    [Header("Animation")]
+    public Vector3 rightPosition;
+    public Vector3 middlePosition;
+    public Vector3 leftPosition;
+    Vector3 targetPosition;
+
+    public enum Targets
+    {
+        right,
+        middle,
+        left
+    };
+
+    public Targets currentTarget = Targets.right;
+    RectTransform RT;
+
     [Header("Recipe Card Objects")]
     public GameObject recipeName;
     public GameObject recipeImage;
@@ -28,10 +46,18 @@ public class RecipeCardScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GetNewMainRecipe();
-	}
+        RT = this.GetComponent<RectTransform>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        GetInput();
+        UpdateTarget();
+        Move();
+    }
+
+    void GetInput()
+    {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ClearRecipe();
@@ -52,6 +78,47 @@ public class RecipeCardScript : MonoBehaviour {
             ClearRecipe();
             GetNewDessertRecipe();
         }
+
+        //debug Recipe Card Movement
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            currentTarget = Targets.left;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            currentTarget = Targets.middle;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            currentTarget = Targets.right;
+        }
+    }
+
+    void UpdateTarget()
+    {
+        switch (currentTarget)
+        {
+            case Targets.right:
+                targetPosition = rightPosition;
+                break;
+
+            case Targets.middle:
+                targetPosition = middlePosition;
+                break;
+
+            case Targets.left:
+                targetPosition = leftPosition;
+                break;
+        }
+    }
+
+    void Move()
+    {
+        if(RT.localPosition != targetPosition)
+        {
+            Vector2 newPos = Vector2.MoveTowards(RT.localPosition, targetPosition, 10f);
+            RT.localPosition = newPos;
+        }
     }
 
     void ClearRecipe()
@@ -63,7 +130,6 @@ public class RecipeCardScript : MonoBehaviour {
                 Destroy(item.gameObject);
             }
         }
-        
     }
 
     void GetNewBreakfastRecipe()
@@ -78,6 +144,8 @@ public class RecipeCardScript : MonoBehaviour {
             GameObject newIngredient = Instantiate(textPrefab, ingredientList.transform);
             newIngredient.GetComponent<Text>().text = ingredient;
         }
+
+        GameManager.Instance().UpdateNeededIngredients(breakfastRecipes[randomInt].ingredients);
     }
 
     void GetNewStarterRecipe()
@@ -92,6 +160,7 @@ public class RecipeCardScript : MonoBehaviour {
             GameObject newIngredient = Instantiate(textPrefab, ingredientList.transform);
             newIngredient.GetComponent<Text>().text = ingredient;
         }
+        GameManager.Instance().UpdateNeededIngredients(starterRecipes[randomInt].ingredients);
     }
 
     void GetNewMainRecipe()
@@ -106,6 +175,7 @@ public class RecipeCardScript : MonoBehaviour {
             GameObject newIngredient = Instantiate(textPrefab, ingredientList.transform);
             newIngredient.GetComponent<Text>().text = ingredient;
         }
+        GameManager.Instance().UpdateNeededIngredients(mainRecipes[randomInt].ingredients);
     }
 
     void GetNewDessertRecipe()
@@ -120,5 +190,6 @@ public class RecipeCardScript : MonoBehaviour {
             GameObject newIngredient = Instantiate(textPrefab, ingredientList.transform);
             newIngredient.GetComponent<Text>().text = ingredient;
         }
+        GameManager.Instance().UpdateNeededIngredients(desertRecipes[randomInt].ingredients);
     }
 }

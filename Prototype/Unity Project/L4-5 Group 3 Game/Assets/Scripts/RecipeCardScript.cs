@@ -13,6 +13,8 @@ public class RecipeCardScript : MonoBehaviour {
     public Vector3 leftPosition;
     Vector3 targetPosition;
 
+    public float peekTime;
+
     public enum Targets
     {
         right,
@@ -29,23 +31,41 @@ public class RecipeCardScript : MonoBehaviour {
     public GameObject ingredientList;
     public GameObject textPrefab;
 
+    int lastRecipeType = 0;
+    int lastRecipeID = 0;
+
+    bool countdown = false;
+    float countdownTimer = 3;
+
     [System.Serializable]
     public class Recipe
     {
         public string name;
         public Sprite image;
-        public string[] ingredients;
+        public Ingredient[] ingredients;
+        public Ingredient[] mixing;
+    }
+
+    [System.Serializable]
+    public class Ingredient
+    {
+        public string name;
+        public int amtNeeded;
+    }
+
+    [System.Serializable]
+    public class Recipes
+    {
+        public string name;
+        public Recipe[] recipes;
     }
 
     [Header("Recipes")]
-    public Recipe[] breakfastRecipes;
-    public Recipe[] starterRecipes;
-    public Recipe[] mainRecipes;
-    public Recipe[] desertRecipes;
+    public Recipes[] RecipeTypes;
 
     // Use this for initialization
     void Start () {
-        GetNewMainRecipe();
+        //GetRecipe(0);
         RT = this.GetComponent<RectTransform>();
     }
 	
@@ -54,6 +74,20 @@ public class RecipeCardScript : MonoBehaviour {
         GetInput();
         UpdateTarget();
         Move();
+
+        if(countdown == true)
+        {
+            if (countdownTimer > 0)
+            {
+                countdownTimer -= Time.deltaTime;
+            }
+            else
+            {
+                countdown = false;
+                currentTarget = Targets.left;
+                GameManager.Instance().StartNextPlayer();
+            }
+        }
     }
 
     void GetInput()
@@ -61,22 +95,23 @@ public class RecipeCardScript : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ClearRecipe();
-            GetNewBreakfastRecipe();
+            GetRecipe(0);
+            Debug.Log("getting here");
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
             ClearRecipe();
-            GetNewStarterRecipe();
+            GetRecipe(0);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             ClearRecipe();
-            GetNewMainRecipe();
+            GetRecipe(0);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             ClearRecipe();
-            GetNewDessertRecipe();
+            GetRecipe(0);
         }
 
         //debug Recipe Card Movement
@@ -132,64 +167,41 @@ public class RecipeCardScript : MonoBehaviour {
         }
     }
 
-    void GetNewBreakfastRecipe()
+    public void GetRecipe(int RecipeType)
     {
-        int randomInt = Mathf.RoundToInt(Random.Range(0, breakfastRecipes.Length ));
+        ClearRecipe();
+        int randomInt = Mathf.RoundToInt(Random.Range(0, RecipeTypes[RecipeType].recipes.Length ));
 
-        recipeName.GetComponent<Text>().text = breakfastRecipes[randomInt].name;
-        recipeImage.GetComponent<Image>().sprite = breakfastRecipes[randomInt].image;
+        Recipe recipe = RecipeTypes[RecipeType].recipes[randomInt];
 
-        foreach (var ingredient in breakfastRecipes[randomInt].ingredients)
+        recipeName.GetComponent<Text>().text = recipe.name;
+        recipeImage.GetComponent<Image>().sprite = recipe.image;
+
+        foreach (var ingredient in recipe.ingredients)
         {
             GameObject newIngredient = Instantiate(textPrefab, ingredientList.transform);
-            newIngredient.GetComponent<Text>().text = ingredient;
+            newIngredient.GetComponent<Text>().text = ingredient.amtNeeded + "x " + ingredient.name;
         }
-
-        GameManager.Instance().UpdateNeededIngredients(breakfastRecipes[randomInt].ingredients);
+        GameManager.Instance().UpdateNeededIngredients(recipe.ingredients);
+        lastRecipeID = randomInt;
     }
 
-    void GetNewStarterRecipe()
+    public void GetMixing()
     {
-        int randomInt = Mathf.RoundToInt(Random.Range(0, starterRecipes.Length));
+        ClearRecipe();
+        Recipe recipe = RecipeTypes[lastRecipeType].recipes[lastRecipeID];
 
-        recipeName.GetComponent<Text>().text = starterRecipes[randomInt].name;
-        recipeImage.GetComponent<Image>().sprite = starterRecipes[randomInt].image;
-
-        foreach (var ingredient in starterRecipes[randomInt].ingredients)
+        foreach (var mix in recipe.mixing)
         {
             GameObject newIngredient = Instantiate(textPrefab, ingredientList.transform);
-            newIngredient.GetComponent<Text>().text = ingredient;
+            newIngredient.GetComponent<Text>().text = mix.amtNeeded + "x " + mix.name;
         }
-        GameManager.Instance().UpdateNeededIngredients(starterRecipes[randomInt].ingredients);
+        GameManager.Instance().UpdateNeededMixing(recipe.mixing);
     }
 
-    void GetNewMainRecipe()
+    public void StartCountdown()
     {
-        int randomInt = Mathf.RoundToInt(Random.Range(0, mainRecipes.Length));
-
-        recipeName.GetComponent<Text>().text = mainRecipes[randomInt].name;
-        recipeImage.GetComponent<Image>().sprite = mainRecipes[randomInt].image;
-
-        foreach (var ingredient in mainRecipes[randomInt].ingredients)
-        {
-            GameObject newIngredient = Instantiate(textPrefab, ingredientList.transform);
-            newIngredient.GetComponent<Text>().text = ingredient;
-        }
-        GameManager.Instance().UpdateNeededIngredients(mainRecipes[randomInt].ingredients);
-    }
-
-    void GetNewDessertRecipe()
-    {
-        int randomInt = Mathf.RoundToInt(Random.Range(0, desertRecipes.Length));
-
-        recipeName.GetComponent<Text>().text = desertRecipes[randomInt].name;
-        recipeImage.GetComponent<Image>().sprite = desertRecipes[randomInt].image;
-
-        foreach (var ingredient in desertRecipes[randomInt].ingredients)
-        {
-            GameObject newIngredient = Instantiate(textPrefab, ingredientList.transform);
-            newIngredient.GetComponent<Text>().text = ingredient;
-        }
-        GameManager.Instance().UpdateNeededIngredients(desertRecipes[randomInt].ingredients);
+        countdownTimer = peekTime;
+        countdown = true;
     }
 }

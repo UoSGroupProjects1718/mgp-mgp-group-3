@@ -5,9 +5,16 @@ using UnityEngine.UI;
 
 public class Ingredient : MonoBehaviour {
 
+    int id;
+
     Image ButtonImage;
+    public GameObject timesPressedBubble;
 
     public Text debugText;
+
+    public int pressesNeeded;
+    public int timesPressed;
+    
 
     [System.Serializable]
     public class IngredientInfo{
@@ -16,26 +23,10 @@ public class Ingredient : MonoBehaviour {
     }
 
     public IngredientInfo[] ingredients;
+    public IngredientInfo[] mixing;
 
-    public void SetSprite(string ingredientName)
-    {
-        debugText.text = ingredientName;
-        foreach (IngredientInfo item in ingredients)
-        {
-            if(item.name == ingredientName)
-            {
-                if (item.image != null)
-                {
-                    ButtonImage.sprite = item.image;
-                }
-                return;
-            }
-        }
-        Debug.Log("Couldn't find the ingredient");
-    }
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -43,4 +34,67 @@ public class Ingredient : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void SetSprite(string ingredientName)
+    {
+        foreach (IngredientInfo item in ingredients)
+        {
+            //Debug.Log(ingredientName + item.name);
+
+            if (item.name == ingredientName)
+            {
+                if (item.image != null)
+                {
+                    ButtonImage.sprite = item.image;
+                }
+                debugText.text = ingredientName;
+                return;
+            }
+        }
+
+        foreach (IngredientInfo item in mixing)
+        {
+            //Debug.Log(ingredientName + item.name);
+
+            if (item.name == ingredientName)
+            {
+                if (item.image != null)
+                {
+                    ButtonImage.sprite = item.image;
+                }
+                debugText.text = ingredientName;
+                return;
+            }
+        }
+        Debug.Log("Couldn't find the ingredient");
+    }
+
+    public void IngredientPressed()
+    {
+        foreach(var ingredient in GameManager.Instance().neededIngredients)
+        {
+            if(ingredient.name == this.name)
+            {
+                timesPressedBubble.SetActive(true);
+                timesPressed++;
+                timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+            }
+        }
+
+        foreach (var ingredient in GameManager.Instance().neededMixing)
+        {
+            if (ingredient.name == this.name)
+            {
+                timesPressedBubble.SetActive(true);
+                timesPressed++;
+                timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+            }
+        }
+        GameManager.Instance().SetGivenAmt(id, timesPressed);
+    }
+
+    public void SetID(int newID)
+    {
+        id = newID;
+    }
 }

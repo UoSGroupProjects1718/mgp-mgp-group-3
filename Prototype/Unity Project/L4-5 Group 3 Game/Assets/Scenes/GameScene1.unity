@@ -2259,6 +2259,42 @@ MonoBehaviour:
         amtNeeded: 10
       - name: Bake
         amtNeeded: 10
+  - name: Breakfast
+    recipes:
+    - name: Full English
+      image: {fileID: 0}
+      ingredients:
+      - name: Sausage
+        amtNeeded: 2
+      - name: Bacon
+        amtNeeded: 2
+      - name: Beans
+        amtNeeded: 1
+      - name: Eggs
+        amtNeeded: 2
+      mixing:
+      - name: Fry
+        amtNeeded: 10
+      - name: Bake
+        amtNeeded: 10
+  - name: Breakfast
+    recipes:
+    - name: Full English
+      image: {fileID: 0}
+      ingredients:
+      - name: Sausage
+        amtNeeded: 2
+      - name: Bacon
+        amtNeeded: 2
+      - name: Beans
+        amtNeeded: 1
+      - name: Eggs
+        amtNeeded: 2
+      mixing:
+      - name: Fry
+        amtNeeded: 10
+      - name: Bake
+        amtNeeded: 10
 --- !u!114 &1910936852
 MonoBehaviour:
   m_ObjectHideFlags: 0

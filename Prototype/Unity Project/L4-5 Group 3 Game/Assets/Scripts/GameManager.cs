@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -14,6 +15,9 @@ public class GameManager : MonoBehaviour {
     public GameObject player1ButtonArea;
     public GameObject player2Side;
     public GameObject player2ButtonArea;
+    public GameObject ResultsPanel;
+    public Slider player1Results;
+    public Slider player2Results;
 
     public float player1SideOpen;
     public float player2SideOpen;
@@ -22,18 +26,26 @@ public class GameManager : MonoBehaviour {
 
     public int RecipeTypeID;
 
-    int lastPlayer = 2;
-
     public RecipeCardScript.Ingredient[] neededIngredients;
     public RecipeCardScript.Ingredient[] neededMixing;
 
-    public enum Turns{
+    public enum Turns
+    {
         none,
         Player1,
         Player2
     }
 
+    public enum Stages
+    {
+        None,
+        Ingredients,
+        Mixing,
+        results
+    }
+
     public Turns currentTurn = Turns.none;
+    public Stages currentStage = Stages.Ingredients;
 
     int[] neededAmts = new int[6];
     int[] player1GivenAmt = new int[6];
@@ -88,35 +100,60 @@ public class GameManager : MonoBehaviour {
     {
         RCS.GetComponent<RectTransform>().anchoredPosition = RCS.rightPosition;
         RCS.GetMixing();
-        lastPlayer = 2;
         currentTurn = Turns.none;
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
     }
 
-    public void StartNextPlayer()
+    public void StartResults()
     {
-        if (lastPlayer == 2)
-        {
-            SwitchTurn(1);
-            lastPlayer = 1;
-        }
-        else
-        {
-            SwitchTurn(2);
-            lastPlayer = 2;
-        }
+        ResultsPanel.SetActive(true);
+        CheckResults();
+        currentTurn = Turns.none;
     }
 
-    public void SwitchTurn(int player)
+    public void StartNextPlayer()
     {
-        if (player == 1)
+        if (currentTurn == Turns.Player2)
         {
-            currentTurn = Turns.Player1;
+            if (currentStage == Stages.None)
+            {
+                currentTurn = Turns.Player1;
+                currentStage = Stages.Ingredients;
+            }
+            else if (currentStage == Stages.Ingredients)
+            {
+                StartMixingRound();
+                currentStage = Stages.Mixing;
+            }
+            else if (currentStage == Stages.Mixing)
+            {
+                currentTurn = Turns.none;
+                StartResults();
+            }
         }
-        if (player == 2)
+        else if (currentTurn == Turns.Player1)
         {
-            currentTurn = Turns.Player2;
+            if (currentStage == Stages.Ingredients)
+            {
+                currentTurn = Turns.Player2;
+            }
+            else if (currentStage == Stages.Mixing)
+            {
+                currentTurn = Turns.Player2;
+            }
+        }
+        else if (currentTurn == Turns.none)
+        {
+            if (currentStage == Stages.None)
+            {
+                currentTurn = Turns.Player1;
+                currentStage = Stages.Ingredients;
+            }
+            else if(currentStage == Stages.Mixing)
+            {
+                currentTurn = Turns.Player1;
+            }
         }
     }
 
@@ -164,7 +201,7 @@ public class GameManager : MonoBehaviour {
             newButton2.GetComponent<Ingredient>().SetID(id);
             currentButtons.Add(newButton2);
             id++;
-            neededAmts[id] = item.amtNeeded;
+            //neededAmts[id] = item.amtNeeded;
         }
     }
 
@@ -190,13 +227,34 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Player1Submit()
+    public void CheckResults()
     {
+        int player1Amt = 0;
+        int player2Amt = 0;
+        foreach(int amt in player1GivenAmt)
+        {
+            player1Amt += amt;
+        }
+        foreach (int amt in player2GivenAmt)
+        {
+            player2Amt += amt;
+        }
+        int needed = 0;
+        foreach (var i in neededAmts)
+        {
+            needed += i;
 
-    }
+            Debug.Log("i = " + i);
+            Debug.Log("needed = " + needed);
+        }
 
-    public void Player2Submit()
-    {
+        player1Amt -= needed;
+        player2Amt -= needed;
+        Debug.Log(needed);
+        Debug.Log(player1Amt);
+        Debug.Log(player2Amt);
+        player1Results.value = player1Amt;
+        player2Results.value = player2Amt;
 
     }
 }

@@ -126,13 +126,13 @@ MonoBehaviour:
   timesPressed: 0
   ingredients:
   - name: Sausage
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 39d2ff013bdf4de45a5b2137a962066c, type: 3}
   - name: Eggs
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 4f0ae89c65de5394d98f18ac61f0d782, type: 3}
   - name: Bacon
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 6ff6bf9872ea169479515494f3200457, type: 3}
   - name: Beans
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 92641116d5ff05b4ca3be96253d3dbd1, type: 3}
   - name: Muffin
     image: {fileID: 0}
   - name: French Bread

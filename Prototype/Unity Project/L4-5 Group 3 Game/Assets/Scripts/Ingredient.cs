@@ -45,7 +45,7 @@ public class Ingredient : MonoBehaviour {
             {
                 if (item.image != null)
                 {
-                    ButtonImage.sprite = item.image;
+                    this.GetComponent<Image>().sprite = item.image;
                 }
                 debugText.text = ingredientName;
                 return;

@@ -69,3 +69,7 @@ E:\TempGroupGit\Prototype\Unity Project\L4-5 Group 3 Game\obj\Debug\Assembly-CSh
 E:\TempGroupGit\Prototype\Unity Project\L4-5 Group 3 Game\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 E:\TempGroupGit\Prototype\Unity Project\L4-5 Group 3 Game\obj\Debug\Assembly-CSharp.dll
 E:\TempGroupGit\Prototype\Unity Project\L4-5 Group 3 Game\obj\Debug\Assembly-CSharp.pdb
+E:\TempGroupGit\Prototype\Unity Project\L4-5 Group 3 Game\Temp\bin\Debug\Vuforia.UnityExtensions.dll
+E:\TempGroupGit\Prototype\Unity Project\L4-5 Group 3 Game\Temp\bin\Debug\Vuforia.UnityExtensions.Editor.dll
+E:\TempGroupGit\Prototype\Unity Project\L4-5 Group 3 Game\Temp\bin\Debug\Vuforia.UnityExtensions.Editor.xml
+E:\TempGroupGit\Prototype\Unity Project\L4-5 Group 3 Game\Temp\bin\Debug\Vuforia.UnityExtensions.xml

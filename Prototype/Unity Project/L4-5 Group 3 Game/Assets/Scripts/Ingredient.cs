@@ -15,6 +15,13 @@ public class Ingredient : MonoBehaviour {
     public int pressesNeeded;
     public int timesPressed;
     
+    public enum ButtonTypes
+    {
+        Ingredient,
+        Mixing
+    }
+
+    public ButtonTypes buttonType = ButtonTypes.Ingredient;
 
     [System.Serializable]
     public class IngredientInfo{
@@ -90,7 +97,14 @@ public class Ingredient : MonoBehaviour {
                 timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
             }
         }
-        GameManager.Instance().SetGivenAmt(id, timesPressed);
+        if (buttonType == ButtonTypes.Ingredient)
+        {
+            GameManager.Instance().SetGivenAmt(id, timesPressed);
+        }
+        else
+        {
+            GameManager.Instance().SetGivenMixingAmt(id, timesPressed);
+        }
     }
 
     public void SetID(int newID)

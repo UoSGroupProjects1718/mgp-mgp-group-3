@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour {
     public GameObject ResultsPanel;
     public Slider player1Results;
     public Slider player2Results;
+    public Slider player1MixingResults;
+    public Slider player2MixingResults;
 
     public float player1SideOpen;
     public float player2SideOpen;
@@ -191,17 +193,19 @@ public class GameManager : MonoBehaviour {
         {
             GameObject newButton1 = Instantiate(ingredientPrefab, player1ButtonArea.transform);
             newButton1.name = item.name;
+            newButton1.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
             newButton1.GetComponent<Ingredient>().SetSprite(item.name);
             newButton1.GetComponent<Ingredient>().SetID(id);
             currentButtons.Add(newButton1);
 
             GameObject newButton2 = Instantiate(ingredientPrefab, player2ButtonArea.transform);
             newButton2.name = item.name;
+            newButton2.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
             newButton2.GetComponent<Ingredient>().SetSprite(item.name);
             newButton2.GetComponent<Ingredient>().SetID(id);
             currentButtons.Add(newButton2);
             id++;
-            //neededAmts[id] = item.amtNeeded;
+            neededMixingAmts[id] = item.amtNeeded;
         }
     }
 
@@ -224,6 +228,18 @@ public class GameManager : MonoBehaviour {
         else
         {
             player2GivenAmt[id] = amt;
+        }
+    }
+
+    public void SetGivenMixingAmt(int id, int amt)
+    {
+        if (currentTurn == Turns.Player1)
+        {
+            player1GivenMixingAmt[id] = amt;
+        }
+        else
+        {
+            player1GivenMixingAmt[id] = amt;
         }
     }
 
@@ -255,6 +271,34 @@ public class GameManager : MonoBehaviour {
         Debug.Log(player2Amt);
         player1Results.value = player1Amt;
         player2Results.value = player2Amt;
+
+
+        player1Amt = 0;
+        player2Amt = 0;
+        foreach (int amt in player1GivenAmt)
+        {
+            player1Amt += amt;
+        }
+        foreach (int amt in player2GivenAmt)
+        {
+            player2Amt += amt;
+        }
+        needed = 0;
+        foreach (var i in neededAmts)
+        {
+            needed += i;
+
+            Debug.Log("i = " + i);
+            Debug.Log("needed = " + needed);
+        }
+
+        player1Amt -= needed;
+        player2Amt -= needed;
+        Debug.Log(needed);
+        Debug.Log(player1Amt);
+        Debug.Log(player2Amt);
+        player1MixingResults.value = player1Amt;
+        player2MixingResults.value = player2Amt;
 
     }
 }

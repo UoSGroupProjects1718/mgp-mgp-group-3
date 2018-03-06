@@ -124,6 +124,7 @@ MonoBehaviour:
   debugText: {fileID: 114893618607444930}
   pressesNeeded: 0
   timesPressed: 0
+  buttonType: 0
   ingredients:
   - name: Sausage
     image: {fileID: 21300000, guid: 39d2ff013bdf4de45a5b2137a962066c, type: 3}

@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour {
 
     public RecipeCardScript RCS;
 
-    public GameObject ingredientPrefab;
+    public GameObject IngredientPrefab;
+    public GameObject MixingPrefab;
 
     public GameObject player1Side;
     public GameObject player1ButtonArea;
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour {
     public float player2SideClosed;
 
     public int RecipeTypeID;
+
+    int nextMixingInt = 0;
 
     public RecipeCardScript.Ingredient[] neededIngredients;
     public RecipeCardScript.Ingredient[] neededMixing;
@@ -105,6 +108,13 @@ public class GameManager : MonoBehaviour {
         currentTurn = Turns.none;
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
+        nextMixingInt = 0;
+    }
+
+    public void NextMixing()
+    {
+        
+        
     }
 
     public void StartResults()
@@ -167,13 +177,13 @@ public class GameManager : MonoBehaviour {
         int id = 0;
         foreach (RecipeCardScript.Ingredient item in neededIngredients)
         {
-            GameObject newButton1 = Instantiate(ingredientPrefab, player1ButtonArea.transform);
+            GameObject newButton1 = Instantiate(IngredientPrefab, player1ButtonArea.transform);
             newButton1.name = item.name;
             newButton1.GetComponent<Ingredient>().SetSprite(item.name);
             newButton1.GetComponent<Ingredient>().SetID(id);
             currentButtons.Add(newButton1);
 
-            GameObject newButton2 = Instantiate(ingredientPrefab, player2ButtonArea.transform);
+            GameObject newButton2 = Instantiate(IngredientPrefab, player2ButtonArea.transform);
             newButton2.name = item.name;
             newButton2.GetComponent<Ingredient>().SetSprite(item.name);
             newButton2.GetComponent<Ingredient>().SetID(id);
@@ -186,27 +196,24 @@ public class GameManager : MonoBehaviour {
     public void UpdateNeededMixing(RecipeCardScript.Ingredient[] mixing)
     {
         DestroyAllButtons();
-
         neededMixing = mixing;
         int id = 0;
-        foreach (RecipeCardScript.Ingredient item in neededMixing)
-        {
-            GameObject newButton1 = Instantiate(ingredientPrefab, player1ButtonArea.transform);
-            newButton1.name = item.name;
-            newButton1.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
-            newButton1.GetComponent<Ingredient>().SetSprite(item.name);
-            newButton1.GetComponent<Ingredient>().SetID(id);
-            currentButtons.Add(newButton1);
+        GameObject newButton1 = Instantiate(MixingPrefab, player1ButtonArea.transform);
+        newButton1.name = neededMixing[nextMixingInt].name;
+        newButton1.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
+        newButton1.GetComponent<Ingredient>().SetSprite(neededMixing[nextMixingInt].name);
+        newButton1.GetComponent<Ingredient>().SetID(id);
+        currentButtons.Add(newButton1);
 
-            GameObject newButton2 = Instantiate(ingredientPrefab, player2ButtonArea.transform);
-            newButton2.name = item.name;
-            newButton2.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
-            newButton2.GetComponent<Ingredient>().SetSprite(item.name);
-            newButton2.GetComponent<Ingredient>().SetID(id);
-            currentButtons.Add(newButton2);
-            id++;
-            neededMixingAmts[id] = item.amtNeeded;
-        }
+        GameObject newButton2 = Instantiate(MixingPrefab, player2ButtonArea.transform);
+        newButton2.name = neededMixing[nextMixingInt].name;
+        newButton2.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
+        newButton2.GetComponent<Ingredient>().SetSprite(neededMixing[nextMixingInt].name);
+        newButton2.GetComponent<Ingredient>().SetID(id);
+        currentButtons.Add(newButton2);
+        id++;
+        nextMixingInt++;
+        neededMixingAmts[id] = neededMixing[nextMixingInt].amtNeeded;
     }
 
     public void DestroyAllButtons()

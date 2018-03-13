@@ -2976,7 +2976,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3222,7 +3222,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RCS: {fileID: 1910936851}
-  ingredientPrefab: {fileID: 1932100045429982, guid: aa83c04c2bf44a64aacb96e8c48ac640,
+  IngredientPrefab: {fileID: 1932100045429982, guid: aa83c04c2bf44a64aacb96e8c48ac640,
+    type: 2}
+  MixingPrefab: {fileID: 1932100045429982, guid: de9fbb45d6fe54d4db74a55702c85994,
     type: 2}
   player1Side: {fileID: 1740413562}
   player1ButtonArea: {fileID: 1996964831}
@@ -3737,7 +3739,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

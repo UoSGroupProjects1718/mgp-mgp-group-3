@@ -92,11 +92,16 @@ public class Ingredient : MonoBehaviour {
         {
             if (ingredient.name == this.name)
             {
-                timesPressedBubble.SetActive(true);
+                if(timesPressedBubble != false)
+                    timesPressedBubble.SetActive(true);
+
                 timesPressed++;
-                timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+
+                if (timesPressedBubble != false)
+                    timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
             }
         }
+
         if (buttonType == ButtonTypes.Ingredient)
         {
             GameManager.Instance().SetGivenAmt(id, timesPressed);

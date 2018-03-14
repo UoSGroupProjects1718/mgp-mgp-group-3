@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour {
     public GameObject player2Side;
     public GameObject player2ButtonArea;
     public GameObject ResultsPanel;
+
+
     public Slider player1Results;
     public Slider player2Results;
     public Slider player1MixingResults;
@@ -29,10 +31,13 @@ public class GameManager : MonoBehaviour {
 
     public int RecipeTypeID;
 
-    int nextMixingInt = 0;
+    int nextPlayer = 0;
 
-    public RecipeCardScript.Ingredient[] neededIngredients;
-    public RecipeCardScript.Ingredient[] neededMixing;
+    public RecipeCardScript.Ingredient[] neededIngredientsP1;
+    public RecipeCardScript.Ingredient[] neededMixingP1;
+
+    public RecipeCardScript.Ingredient[] neededIngredientsP2;
+    public RecipeCardScript.Ingredient[] neededMixingP2;
 
     public enum Turns
     {
@@ -95,26 +100,44 @@ public class GameManager : MonoBehaviour {
 
     public void StartRound()
     {
+        RCS.gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
         RCS.GetRecipe(RecipeTypeID);
         currentTurn = Turns.none;
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
+        nextPlayer = 1;
+    }
+
+    public void StartPlayer2Round()
+    {
+        RCS.gameObject.transform.eulerAngles = new Vector3(0, 0, 180);
+        RCS.GetRecipe(RecipeTypeID);
+        currentTurn = Turns.none;
+        RCS.currentTarget = RecipeCardScript.Targets.middle;
+        RCS.StartCountdown();
+        nextPlayer = 2;
     }
 
     public void StartMixingRound()
     {
+        RCS.gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
         RCS.GetComponent<RectTransform>().anchoredPosition = RCS.rightPosition;
         RCS.GetMixing();
         currentTurn = Turns.none;
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
-        nextMixingInt = 0;
+        nextPlayer = 1;
     }
 
-    public void NextMixing()
+    public void StartPlayer2MixingRound()
     {
-        
-        
+        RCS.gameObject.transform.eulerAngles = new Vector3(0, 0, 180);
+        RCS.GetComponent<RectTransform>().anchoredPosition = RCS.rightPosition;
+        RCS.GetMixing();
+        currentTurn = Turns.none;
+        RCS.currentTarget = RecipeCardScript.Targets.middle;
+        RCS.StartCountdown();
+        nextPlayer = 2;
     }
 
     public void StartResults()
@@ -148,11 +171,11 @@ public class GameManager : MonoBehaviour {
         {
             if (currentStage == Stages.Ingredients)
             {
-                currentTurn = Turns.Player2;
+                StartPlayer2Round();
             }
             else if (currentStage == Stages.Mixing)
             {
-                currentTurn = Turns.Player2;
+                StartPlayer2MixingRound();
             }
         }
         else if (currentTurn == Turns.none)
@@ -162,9 +185,29 @@ public class GameManager : MonoBehaviour {
                 currentTurn = Turns.Player1;
                 currentStage = Stages.Ingredients;
             }
+            else if (currentStage == Stages.Ingredients)
+            {
+                if (nextPlayer == 1)
+                {
+                    currentTurn = Turns.Player1;
+                }
+
+                if (nextPlayer == 2)
+                {
+                    currentTurn = Turns.Player2;
+                }
+            }
             else if(currentStage == Stages.Mixing)
             {
-                currentTurn = Turns.Player1;
+                if(nextPlayer == 1)
+                {
+                    currentTurn = Turns.Player1;
+                }
+                
+                if(nextPlayer == 2)
+                {
+                    currentTurn = Turns.Player2;
+                }
             }
         }
     }
@@ -172,10 +215,19 @@ public class GameManager : MonoBehaviour {
     public void UpdateNeededIngredients(RecipeCardScript.Ingredient[] ingredients)
     {
         DestroyAllButtons();
+        if (nextPlayer == 1)
+        {
+            neededIngredientsP1 = ingredients;
+        }
 
-        neededIngredients = ingredients;
+        if (nextPlayer == 2)
+        {
+            Debug.Log("here");
+            neededIngredientsP2 = ingredients;
+        }
+
         int id = 0;
-        foreach (RecipeCardScript.Ingredient item in neededIngredients)
+        foreach (RecipeCardScript.Ingredient item in ingredients)
         {
             GameObject newButton1 = Instantiate(IngredientPrefab, player1ButtonArea.transform);
             newButton1.name = item.name;
@@ -196,24 +248,37 @@ public class GameManager : MonoBehaviour {
     public void UpdateNeededMixing(RecipeCardScript.Ingredient[] mixing)
     {
         DestroyAllButtons();
-        neededMixing = mixing;
+        
         int id = 0;
-        GameObject newButton1 = Instantiate(MixingPrefab, player1ButtonArea.transform);
-        newButton1.name = neededMixing[nextMixingInt].name;
-        newButton1.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
-        newButton1.GetComponent<Ingredient>().SetSprite(neededMixing[nextMixingInt].name);
-        newButton1.GetComponent<Ingredient>().SetID(id);
-        currentButtons.Add(newButton1);
 
-        GameObject newButton2 = Instantiate(MixingPrefab, player2ButtonArea.transform);
-        newButton2.name = neededMixing[nextMixingInt].name;
-        newButton2.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
-        newButton2.GetComponent<Ingredient>().SetSprite(neededMixing[nextMixingInt].name);
-        newButton2.GetComponent<Ingredient>().SetID(id);
-        currentButtons.Add(newButton2);
-        id++;
-        nextMixingInt++;
-        neededMixingAmts[id] = neededMixing[nextMixingInt].amtNeeded;
+        if (nextPlayer == 1)
+        {
+            neededMixingP1 = mixing;
+        }
+
+        if (nextPlayer == 2)
+        {
+            neededMixingP2 = mixing;
+        }
+
+        foreach (RecipeCardScript.Ingredient item in mixing)
+        {
+            GameObject newButton1 = Instantiate(IngredientPrefab, player1ButtonArea.transform);
+            newButton1.name = item.name;
+            newButton1.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
+            newButton1.GetComponent<Ingredient>().SetSprite(item.name);
+            newButton1.GetComponent<Ingredient>().SetID(id);
+            currentButtons.Add(newButton1);
+
+            GameObject newButton2 = Instantiate(IngredientPrefab, player2ButtonArea.transform);
+            newButton2.name = item.name;
+            newButton2.GetComponent<Ingredient>().buttonType = Ingredient.ButtonTypes.Mixing;
+            newButton2.GetComponent<Ingredient>().SetSprite(item.name);
+            newButton2.GetComponent<Ingredient>().SetID(id);
+            currentButtons.Add(newButton2);
+            id++;
+            neededMixingAmts[id] = item.amtNeeded;
+        }
     }
 
     public void DestroyAllButtons()

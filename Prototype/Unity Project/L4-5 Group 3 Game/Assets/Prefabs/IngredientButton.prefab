@@ -61,7 +61,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1932100045429982
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 5398921356c92574788a9f033f767969, type: 3}
   - name: Casserole
     image: {fileID: 21300000, guid: 3a1f92702f19a254d9cc1f2330822ea2, type: 3}
-  - name: Chopping
+  - name: Chop
     image: {fileID: 21300000, guid: 731c8588d67f2264e83a6775f42a842f, type: 3}
   - name: Grater
     image: {fileID: 21300000, guid: b2b3d41bfab3da54e991ccb23d925a76, type: 3}
@@ -424,6 +424,10 @@ MonoBehaviour:
   - name: Roast
     image: {fileID: 21300000, guid: 5398921356c92574788a9f033f767969, type: 3}
   - name: Cool
+    image: {fileID: 21300000, guid: 71b84910b03cd1f40a8cf726014930c6, type: 3}
+  - name: Toast
+    image: {fileID: 21300000, guid: 71b84910b03cd1f40a8cf726014930c6, type: 3}
+  - name: Fry
     image: {fileID: 21300000, guid: 71b84910b03cd1f40a8cf726014930c6, type: 3}
 --- !u!114 &114441173293227362
 MonoBehaviour:

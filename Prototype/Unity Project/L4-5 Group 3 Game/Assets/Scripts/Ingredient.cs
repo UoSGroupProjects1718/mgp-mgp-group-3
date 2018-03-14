@@ -65,7 +65,7 @@ public class Ingredient : MonoBehaviour {
 
             if (item.name == ingredientName)
             {
-                if (item.image != null)
+                if (item.image != null && ButtonImage != null)
                 {
                     ButtonImage.sprite = item.image;
                 }
@@ -78,27 +78,59 @@ public class Ingredient : MonoBehaviour {
 
     public void IngredientPressed()
     {
-        foreach(var ingredient in GameManager.Instance().neededIngredients)
+
+
+        if (GameManager.Instance().currentTurn == GameManager.Turns.Player1)
         {
-            if(ingredient.name == this.name)
+
+            foreach (var ingredient in GameManager.Instance().neededIngredientsP1)
             {
-                timesPressedBubble.SetActive(true);
-                timesPressed++;
-                timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                if (ingredient.name == this.name)
+                {
+                    timesPressedBubble.SetActive(true);
+                    timesPressed++;
+                    timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                }
+            }
+
+            foreach (var ingredient in GameManager.Instance().neededMixingP1)
+            {
+                if (ingredient.name == this.name)
+                {
+                    if (timesPressedBubble != false)
+                        timesPressedBubble.SetActive(true);
+
+                    timesPressed++;
+
+                    if (timesPressedBubble != false)
+                        timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                }
             }
         }
-
-        foreach (var ingredient in GameManager.Instance().neededMixing)
+        else
         {
-            if (ingredient.name == this.name)
+            foreach (var ingredient in GameManager.Instance().neededIngredientsP2)
             {
-                if(timesPressedBubble != false)
+                if (ingredient.name == this.name)
+                {
                     timesPressedBubble.SetActive(true);
-
-                timesPressed++;
-
-                if (timesPressedBubble != false)
+                    timesPressed++;
                     timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                }
+            }
+
+            foreach (var ingredient in GameManager.Instance().neededMixingP2)
+            {
+                if (ingredient.name == this.name)
+                {
+                    if (timesPressedBubble != false)
+                        timesPressedBubble.SetActive(true);
+
+                    timesPressed++;
+
+                    if (timesPressedBubble != false)
+                        timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                }
             }
         }
 

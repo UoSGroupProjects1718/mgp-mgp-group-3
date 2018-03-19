@@ -4383,6 +4383,28 @@ MonoBehaviour:
         amtNeeded: 10
       - name: Bake
         amtNeeded: 10
+  - name: Starter
+    recipes:
+    - name: Tomato Soup
+      image: {fileID: 21300000, guid: 1f390c0da99d8324d8dfabf868310414, type: 3}
+      ingredients:
+      - name: Stock
+        amtNeeded: 1
+      - name: Onion
+        amtNeeded: 1
+      - name: Tomato
+        amtNeeded: 4
+      - name: Cream
+        amtNeeded: 1
+      - name: Pepper
+        amtNeeded: 1
+      mixing:
+      - name: Cutting_Board
+        amtNeeded: 5
+      - name: Cooking_Pot
+        amtNeeded: 2
+  - name: Main
+    recipes:
     - name: Burger
       image: {fileID: 21300000, guid: 2f59cf6d351749945b5e1cc917722e71, type: 3}
       ingredients:
@@ -4401,6 +4423,96 @@ MonoBehaviour:
         amtNeeded: 5
       - name: Toast
         amtNeeded: 2
+  - name: Dessert
+    recipes:
+    - name: Pancakes
+      image: {fileID: 21300000, guid: c3a4b0da8c558b24fa0b756635ff268c, type: 3}
+      ingredients:
+      - name: Flour
+        amtNeeded: 1
+      - name: Egg
+        amtNeeded: 2
+      - name: Milk
+        amtNeeded: 1
+      - name: Salt
+        amtNeeded: 1
+      mixing:
+      - name: MixingBowl
+        amtNeeded: 5
+      - name: Frying_Pan
+        amtNeeded: 5
+    - name: Cherry Bomb Pancakes
+      image: {fileID: 21300000, guid: c3a4b0da8c558b24fa0b756635ff268c, type: 3}
+      ingredients:
+      - name: Flour
+        amtNeeded: 1
+      - name: Egg
+        amtNeeded: 2
+      - name: Milk
+        amtNeeded: 1
+      - name: Salt
+        amtNeeded: 1
+      - name: Cherry
+        amtNeeded: 4
+      mixing:
+      - name: MixingBowl
+        amtNeeded: 6
+      - name: Frying_Pan
+        amtNeeded: 4
+    - name: Strawberry Pancakes
+      image: {fileID: 21300000, guid: c3a4b0da8c558b24fa0b756635ff268c, type: 3}
+      ingredients:
+      - name: Flour
+        amtNeeded: 2
+      - name: Egg
+        amtNeeded: 2
+      - name: Milk
+        amtNeeded: 1
+      - name: Salt
+        amtNeeded: 1
+      - name: Strawberry
+        amtNeeded: 3
+      mixing:
+      - name: MixingBowl
+        amtNeeded: 4
+      - name: Frying_Pan
+        amtNeeded: 6
+    - name: Blueberry Pancakes
+      image: {fileID: 21300000, guid: c3a4b0da8c558b24fa0b756635ff268c, type: 3}
+      ingredients:
+      - name: Flour
+        amtNeeded: 1
+      - name: Egg
+        amtNeeded: 2
+      - name: Milk
+        amtNeeded: 1
+      - name: Salt
+        amtNeeded: 1
+      - name: Blueberry
+        amtNeeded: 2
+      mixing:
+      - name: MixingBowl
+        amtNeeded: 5
+      - name: Frying_Pan
+        amtNeeded: 5
+    - name: Raspberry Pancakes
+      image: {fileID: 21300000, guid: c3a4b0da8c558b24fa0b756635ff268c, type: 3}
+      ingredients:
+      - name: Flour
+        amtNeeded: 1
+      - name: Egg
+        amtNeeded: 2
+      - name: Milk
+        amtNeeded: 1
+      - name: Sugar
+        amtNeeded: 2
+      - name: Raspberries
+        amtNeeded: 2
+      mixing:
+      - name: MixingBowl
+        amtNeeded: 5
+      - name: Frying_Pan
+        amtNeeded: 5
 --- !u!114 &1910936852
 MonoBehaviour:
   m_ObjectHideFlags: 0

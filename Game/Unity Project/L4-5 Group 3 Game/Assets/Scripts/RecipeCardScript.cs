@@ -173,9 +173,21 @@ public class RecipeCardScript : MonoBehaviour {
 		int randomTypeInt = Mathf.RoundToInt(Random.Range(0, RecipeTypes.Length ));
         int randomInt = Mathf.RoundToInt(Random.Range(0, RecipeTypes[RecipeType].recipes.Length ));
 
-		//use this one in the final game as it lets us choose one type of recipe
-		//Recipe recipe = RecipeTypes[RecipeType].recipes[randomInt];
-		Recipe recipe = RecipeTypes[randomTypeInt].recipes[randomInt];
+        if(GameManager.Instance().nextPlayer == 1)
+        {
+            GameManager.Instance().player1MixingInt1 = randomTypeInt;
+            GameManager.Instance().player1MixingInt2 = randomInt;
+        }
+
+        if (GameManager.Instance().nextPlayer == 2)
+        {
+            GameManager.Instance().player2MixingInt1 = randomTypeInt;
+            GameManager.Instance().player2MixingInt2 = randomInt;
+        }
+
+        //use this one in the final game as it lets us choose one type of recipe
+        //Recipe recipe = RecipeTypes[RecipeType].recipes[randomInt];
+        Recipe recipe = RecipeTypes[randomTypeInt].recipes[randomInt];
 
         recipeName.GetComponent<Text>().text = recipe.name;
         recipeImage.GetComponent<Image>().sprite = recipe.image;
@@ -189,10 +201,13 @@ public class RecipeCardScript : MonoBehaviour {
         lastRecipeID = randomInt;
     }
 
-    public void GetMixing()
+    public void GetMixing(int RecipeType, int RecipeID)
     {
         ClearRecipe();
-        Recipe recipe = RecipeTypes[lastRecipeType].recipes[lastRecipeID];
+        Recipe recipe = RecipeTypes[RecipeType].recipes[RecipeID];
+
+        recipeName.GetComponent<Text>().text = recipe.name;
+        recipeImage.GetComponent<Image>().sprite = recipe.image;
 
         foreach (var mix in recipe.mixing)
         {

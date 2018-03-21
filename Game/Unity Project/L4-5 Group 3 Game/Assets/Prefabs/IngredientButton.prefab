@@ -27,7 +27,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1434284953192646
 GameObject:
   m_ObjectHideFlags: 1
@@ -429,6 +429,14 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 71b84910b03cd1f40a8cf726014930c6, type: 3}
   - name: Fry
     image: {fileID: 21300000, guid: 71b84910b03cd1f40a8cf726014930c6, type: 3}
+  - name: Mixing Bowl
+    image: {fileID: 21300000, guid: 8a7661e2c2c9f4840954e0badc9a8e88, type: 3}
+  - name: Frying Pan
+    image: {fileID: 21300000, guid: f14ca3b81afc5d940a4c3561696b20d2, type: 3}
+  - name: Cutting Board
+    image: {fileID: 21300000, guid: 731c8588d67f2264e83a6775f42a842f, type: 3}
+  - name: Cooking Pot
+    image: {fileID: 21300000, guid: d0ede6476b69e384b97a80a528941501, type: 3}
 --- !u!114 &114441173293227362
 MonoBehaviour:
   m_ObjectHideFlags: 1

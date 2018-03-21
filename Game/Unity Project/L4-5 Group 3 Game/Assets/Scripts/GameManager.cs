@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour {
 	public Text Player1Timer;
 	public Text Player2Timer;
 
+    public int player1MixingInt1;
+    public int player1MixingInt2;
+    public int player2MixingInt1;
+    public int player2MixingInt2;
+
     public Slider player1Results;
     public Slider player2Results;
     public Slider player1MixingResults;
@@ -35,7 +40,7 @@ public class GameManager : MonoBehaviour {
 
     public int RecipeTypeID;
 
-    int nextPlayer = 0;
+    public int nextPlayer = 0;
 
     public RecipeCardScript.Ingredient[] neededIngredientsP1;
     public RecipeCardScript.Ingredient[] neededMixingP1;
@@ -140,7 +145,7 @@ public class GameManager : MonoBehaviour {
 		nextPlayer = 1;
         RCS.gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
         RCS.GetComponent<RectTransform>().anchoredPosition = RCS.rightPosition;
-        RCS.GetMixing();
+        RCS.GetMixing(player1MixingInt1, player1MixingInt2);
         currentTurn = Turns.none;
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
@@ -153,7 +158,7 @@ public class GameManager : MonoBehaviour {
 		nextPlayer = 2;
         RCS.gameObject.transform.eulerAngles = new Vector3(0, 0, 180);
         RCS.GetComponent<RectTransform>().anchoredPosition = RCS.rightPosition;
-        RCS.GetMixing();
+        RCS.GetMixing(player2MixingInt1, player2MixingInt2);
         currentTurn = Turns.none;
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();

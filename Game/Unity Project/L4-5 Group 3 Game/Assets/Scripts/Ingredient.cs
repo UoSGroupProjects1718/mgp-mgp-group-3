@@ -54,8 +54,28 @@ public class Ingredient : MonoBehaviour {
                 {
                     this.GetComponent<Image>().sprite = item.image;
                 }
+                
                 debugText.text = ingredientName;
                 return;
+            }
+        }
+
+        if (this.GetComponent<Image>().sprite == null)
+        {
+            foreach (IngredientInfo item in mixing)
+            {
+                //Debug.Log(ingredientName + item.name);
+
+                if (item.name == ingredientName)
+                {
+                    if (item.image != null)
+                    {
+                        this.GetComponent<Image>().sprite = item.image;
+                    }
+
+                    debugText.text = ingredientName;
+                    return;
+                }
             }
         }
 

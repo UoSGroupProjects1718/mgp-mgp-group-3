@@ -324,7 +324,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.8235294, g: 0.3633218, b: 0.6204032, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -3308,6 +3308,10 @@ MonoBehaviour:
   ResultsPanel: {fileID: 650832018}
   Player1Timer: {fileID: 1054997903}
   Player2Timer: {fileID: 2004652999}
+  player1MixingInt1: 0
+  player1MixingInt2: 0
+  player2MixingInt1: 0
+  player2MixingInt2: 0
   player1Results: {fileID: 613434554}
   player2Results: {fileID: 2097050317}
   player1MixingResults: {fileID: 1847626348}
@@ -3317,6 +3321,7 @@ MonoBehaviour:
   player1SideClosed: -50
   player2SideClosed: 50
   RecipeTypeID: 0
+  nextPlayer: 0
   neededIngredientsP1: []
   neededMixingP1: []
   neededIngredientsP2: []
@@ -3560,7 +3565,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8a7661e2c2c9f4840954e0badc9a8e88, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4446,7 +4451,7 @@ MonoBehaviour:
   - name: Breakfast
     recipes:
     - name: Full English
-      image: {fileID: 0}
+      image: {fileID: 21300000, guid: e24f372602c46cf42bdd6f07fe098ccb, type: 3}
       ingredients:
       - name: Sausage
         amtNeeded: 2
@@ -4477,9 +4482,9 @@ MonoBehaviour:
       - name: Pepper
         amtNeeded: 1
       mixing:
-      - name: Cutting_Board
+      - name: Chop
         amtNeeded: 5
-      - name: Cooking_Pot
+      - name: Cooking Pot
         amtNeeded: 2
   - name: Main
     recipes:
@@ -4508,16 +4513,16 @@ MonoBehaviour:
       ingredients:
       - name: Flour
         amtNeeded: 1
-      - name: Egg
+      - name: Eggs
         amtNeeded: 2
       - name: Milk
         amtNeeded: 1
       - name: Salt
         amtNeeded: 1
       mixing:
-      - name: MixingBowl
+      - name: Mixing Bowl
         amtNeeded: 5
-      - name: Frying_Pan
+      - name: Frying Pan
         amtNeeded: 5
     - name: Cherry Bomb Pancakes
       image: {fileID: 21300000, guid: c3a4b0da8c558b24fa0b756635ff268c, type: 3}
@@ -4533,9 +4538,9 @@ MonoBehaviour:
       - name: Cherry
         amtNeeded: 4
       mixing:
-      - name: MixingBowl
+      - name: Mixing Bowl
         amtNeeded: 6
-      - name: Frying_Pan
+      - name: Frying Pan
         amtNeeded: 4
     - name: Strawberry Pancakes
       image: {fileID: 21300000, guid: c3a4b0da8c558b24fa0b756635ff268c, type: 3}
@@ -4551,7 +4556,7 @@ MonoBehaviour:
       - name: Strawberry
         amtNeeded: 3
       mixing:
-      - name: MixingBowl
+      - name: Mixing Bowl
         amtNeeded: 4
       - name: Frying_Pan
         amtNeeded: 6
@@ -4569,9 +4574,9 @@ MonoBehaviour:
       - name: Blueberry
         amtNeeded: 2
       mixing:
-      - name: MixingBowl
+      - name: Mixing Bowl
         amtNeeded: 5
-      - name: Frying_Pan
+      - name: Frying Pan
         amtNeeded: 5
     - name: Raspberry Pancakes
       image: {fileID: 21300000, guid: c3a4b0da8c558b24fa0b756635ff268c, type: 3}
@@ -4587,9 +4592,9 @@ MonoBehaviour:
       - name: Raspberries
         amtNeeded: 2
       mixing:
-      - name: MixingBowl
+      - name: Mixing Bowl
         amtNeeded: 5
-      - name: Frying_Pan
+      - name: Frying Pan
         amtNeeded: 5
 --- !u!114 &1910936852
 MonoBehaviour:

@@ -27,6 +27,7 @@ public class Ingredient : MonoBehaviour {
     public class IngredientInfo{
         public string name;
         public Sprite image;
+        public AudioClip sound;
     }
 
     public IngredientInfo[] ingredients;
@@ -71,6 +72,11 @@ public class Ingredient : MonoBehaviour {
                     if (item.image != null)
                     {
                         this.GetComponent<Image>().sprite = item.image;
+                    }
+
+                    if(item.sound != false)
+                    {
+                        this.GetComponent<AudioSource>().PlayOneShot(item.sound);
                     }
 
                     debugText.text = ingredientName;

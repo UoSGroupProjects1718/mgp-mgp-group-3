@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour {
     public GameObject player2ButtonArea;
     public GameObject ResultsPanel;
 
-
 	float timer = 18;
 	public Text Player1Timer;
 	public Text Player2Timer;
@@ -86,6 +85,8 @@ public class GameManager : MonoBehaviour {
         {
             _instance = this.GetComponent<GameManager>();
         }
+
+        StartRound();
     }
 
 	void Update () {

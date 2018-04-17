@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class Ingredient : MonoBehaviour {
     int id;
 
     Image ButtonImage;
+    public Image ButtonIngredientImage;
     public GameObject timesPressedBubble;
 
     public Text debugText;
@@ -23,13 +25,33 @@ public class Ingredient : MonoBehaviour {
 
     public ButtonTypes buttonType = ButtonTypes.Ingredient;
 
+    public enum FoodType
+    {
+        Fish,
+        Vegetable,
+        Fruit,
+        Meat,
+        Dairy,
+        Other
+    }
+
     [System.Serializable]
-    public class IngredientInfo{
+    public class ButtonInfo
+    {
+        public Sprite Idle;
+        public Sprite Pressed;
+    }
+
+    [System.Serializable]
+    public class IngredientInfo
+    {
         public string name;
         public Sprite image;
+        public FoodType foodType;
         public AudioClip sound;
     }
 
+    public ButtonInfo[] Buttons;
     public IngredientInfo[] ingredients;
     public IngredientInfo[] mixing;
 
@@ -53,7 +75,8 @@ public class Ingredient : MonoBehaviour {
             {
                 if (item.image != null)
                 {
-                    this.GetComponent<Image>().sprite = item.image;
+                    SetButtonColor(item);
+                    ButtonIngredientImage.sprite = item.image;
                 }
                 
                 debugText.text = ingredientName;
@@ -71,7 +94,8 @@ public class Ingredient : MonoBehaviour {
                 {
                     if (item.image != null)
                     {
-                        this.GetComponent<Image>().sprite = item.image;
+                        SetButtonColor(item);
+                        ButtonIngredientImage.sprite = item.image;
                     }
 
                     if(item.sound != false)
@@ -91,15 +115,54 @@ public class Ingredient : MonoBehaviour {
 
             if (item.name == ingredientName)
             {
-                if (item.image != null && ButtonImage != null)
+                if (item.image != null && ButtonIngredientImage != null)
                 {
-                    ButtonImage.sprite = item.image;
+                    ButtonIngredientImage.sprite = item.image;
                 }
                 debugText.text = ingredientName;
                 return;
             }
         }
         Debug.Log("Couldn't find the ingredient");
+    }
+
+    private void SetButtonColor(IngredientInfo item)
+    {
+        int i = 0;
+        switch (item.foodType)
+        {
+            case FoodType.Fish:
+                i = 0;
+                break;
+
+            case FoodType.Vegetable:
+                i = 1;
+                break;
+
+            case FoodType.Fruit:
+                i = 2;
+                break;
+
+            case FoodType.Meat:
+                i = 3;
+                break;
+
+            case FoodType.Dairy:
+                i = 4;
+                break;
+
+            case FoodType.Other:
+                i = 5;
+                break;
+
+            default:
+                break;
+        }
+
+        this.GetComponent<Image>().sprite = Buttons[i].Idle;
+        SpriteState ss;
+        ss.pressedSprite = Buttons[i].Pressed;
+        this.GetComponent<Button>().spriteState = ss;
     }
 
     public void IngredientPressed()

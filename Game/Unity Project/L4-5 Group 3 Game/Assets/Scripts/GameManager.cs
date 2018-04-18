@@ -18,9 +18,11 @@ public class GameManager : MonoBehaviour {
     public GameObject player2ButtonArea;
     public GameObject ResultsPanel;
 
-	float timer = 18;
+	float timer = 14;
 	public Text Player1Timer;
 	public Text Player2Timer;
+    public Animator Player1TimerAnim;
+    public Animator Player2TimerAnim;
 
     public int player1MixingInt1;
     public int player1MixingInt2;
@@ -94,12 +96,20 @@ public class GameManager : MonoBehaviour {
         {
             player1Side.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, Mathf.MoveTowards(player1Side.GetComponent<RectTransform>().anchoredPosition.y,player1SideOpen, 4));
             player2Side.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, Mathf.MoveTowards(player2Side.GetComponent<RectTransform>().anchoredPosition.y, player2SideClosed, 4));
+            if (Mathf.RoundToInt(timer) <= 6)
+            {
+                Player1TimerAnim.SetTrigger("StartTimer");
+            }
         }
         else
         if (currentTurn == Turns.Player2)
         {
             player1Side.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, Mathf.MoveTowards(player1Side.GetComponent<RectTransform>().anchoredPosition.y, player1SideClosed, 4));
             player2Side.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, Mathf.MoveTowards(player2Side.GetComponent<RectTransform>().anchoredPosition.y, player2SideOpen, 4));
+            if (Mathf.RoundToInt(timer) <= 6)
+            {
+                Player2TimerAnim.SetTrigger("StartTimer");
+            }
         }
         else if(currentTurn == Turns.none)
         {
@@ -109,9 +119,10 @@ public class GameManager : MonoBehaviour {
 
 		if (currentTurn != Turns.none) {
 			timer -= Time.deltaTime;
-			Player1Timer.text = Mathf.RoundToInt (timer) + "s";
-			Player2Timer.text = Mathf.RoundToInt (timer) + "s";
-			if (Mathf.RoundToInt (timer) <= 0) {
+            //Player1Timer.text = Mathf.RoundToInt (timer) + "s";
+            //Player2Timer.text = Mathf.RoundToInt (timer) + "s";
+
+            if (Mathf.RoundToInt (timer) <= 0) {
 				StartNextPlayer ();
 			}
 		}
@@ -126,7 +137,7 @@ public class GameManager : MonoBehaviour {
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
 
-		timer = 15;
+		timer = 10;
     }
 
     public void StartPlayer2Round()
@@ -138,7 +149,7 @@ public class GameManager : MonoBehaviour {
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
 
-		timer = 15;
+		timer = 10;
     }
 
     public void StartMixingRound()
@@ -151,7 +162,7 @@ public class GameManager : MonoBehaviour {
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
 
-		timer = 15;
+		timer = 10;
     }
 
     public void StartPlayer2MixingRound()
@@ -164,7 +175,7 @@ public class GameManager : MonoBehaviour {
         RCS.currentTarget = RecipeCardScript.Targets.middle;
         RCS.StartCountdown();
 
-		timer = 15;
+		timer = 10;
     }
 
     public void StartResults()
@@ -255,8 +266,24 @@ public class GameManager : MonoBehaviour {
         }
 
         int id = 0;
+        bool randomAdded = false;
         foreach (RecipeCardScript.Ingredient item in ingredients)
         {
+            if (!randomAdded && Random.Range(0, 100) < 33)
+            {
+                GameObject RedHerringButton1 = Instantiate(IngredientPrefab, player1ButtonArea.transform);
+                string itemName = RedHerringButton1.GetComponent<Ingredient>().GetRandomIngredient();
+                RedHerringButton1.GetComponent<Ingredient>().SetID(id);
+                currentButtons.Add(RedHerringButton1);
+
+                GameObject RedHerringButton2 = Instantiate(IngredientPrefab, player2ButtonArea.transform);
+                RedHerringButton2.name = itemName;
+                RedHerringButton2.GetComponent<Ingredient>().SetSprite(itemName);
+                RedHerringButton2.GetComponent<Ingredient>().SetID(id);
+                currentButtons.Add(RedHerringButton2);
+                randomAdded = true;
+            }
+
             GameObject newButton1 = Instantiate(IngredientPrefab, player1ButtonArea.transform);
             newButton1.name = item.name;
             newButton1.GetComponent<Ingredient>().SetSprite(item.name);
@@ -270,6 +297,19 @@ public class GameManager : MonoBehaviour {
             currentButtons.Add(newButton2);
             id++;
             neededAmts[id] = item.amtNeeded;
+        }
+        if (!randomAdded)
+        {
+            GameObject RedHerringButton1 = Instantiate(IngredientPrefab, player1ButtonArea.transform);
+            string itemName = RedHerringButton1.GetComponent<Ingredient>().GetRandomIngredient();
+            RedHerringButton1.GetComponent<Ingredient>().SetID(id);
+            currentButtons.Add(RedHerringButton1);
+
+            GameObject RedHerringButton2 = Instantiate(IngredientPrefab, player2ButtonArea.transform);
+            RedHerringButton2.name = itemName;
+            RedHerringButton2.GetComponent<Ingredient>().SetSprite(itemName);
+            RedHerringButton2.GetComponent<Ingredient>().SetID(id);
+            currentButtons.Add(RedHerringButton2);
         }
     }
 

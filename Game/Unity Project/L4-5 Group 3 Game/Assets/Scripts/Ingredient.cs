@@ -238,4 +238,12 @@ public class Ingredient : MonoBehaviour {
     {
         id = newID;
     }
+
+    public string GetRandomIngredient()
+    {
+        IngredientInfo item = ingredients[UnityEngine.Random.Range(0, ingredients.Length)];
+        this.name = item.name;
+        this.GetComponent<Ingredient>().SetSprite(item.name);
+        return item.name;
+    }
 }

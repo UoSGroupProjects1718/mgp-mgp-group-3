@@ -4141,7 +4141,29 @@ MonoBehaviour:
         amtNeeded: 5
       - name: Chop
         amtNeeded: 5
-      - name: Oven
+      - name: Bake
+        amtNeeded: 2
+    - name: Spaghetti Bolognese
+      image: {fileID: 21300000, guid: 45f269b1951f14a488ac9f789342661a, type: 3}
+      ingredients:
+      - name: Noodles
+        amtNeeded: 4
+      - name: Mince_Beef
+        amtNeeded: 1
+      - name: Bolognese-sauce
+        amtNeeded: 1
+      - name: Tomato
+        amtNeeded: 1
+      - name: Garlic
+        amtNeeded: 1
+      - name: Olives
+        amtNeeded: 1
+      mixing:
+      - name: Fry
+        amtNeeded: 5
+      - name: Chop
+        amtNeeded: 5
+      - name: Bake
         amtNeeded: 2
   - name: Dessert
     recipes:

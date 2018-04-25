@@ -4017,6 +4017,92 @@ MonoBehaviour:
         amtNeeded: 5
       - name: Cooking Pot
         amtNeeded: 2
+    - name: Beef Curry Soup
+      image: {fileID: 21300000, guid: 746dd1441743d814698e1c50e8e3faf8, type: 3}
+      ingredients:
+      - name: Onion
+        amtNeeded: 1
+      - name: Beef
+        amtNeeded: 4
+      - name: Chilli_Pepper
+        amtNeeded: 1
+      - name: Pepper
+        amtNeeded: 1
+      mixing:
+      - name: Chop
+        amtNeeded: 5
+      - name: Cooking Pot
+        amtNeeded: 2
+    - name: Carrot Coriander Soup
+      image: {fileID: 21300000, guid: 0f917cdfb0aadde4982460308aa1dfea, type: 3}
+      ingredients:
+      - name: Onion
+        amtNeeded: 1
+      - name: Carrot
+        amtNeeded: 4
+      - name: Coriander-leaf
+        amtNeeded: 1
+      - name: Garlic
+        amtNeeded: 1
+      - name: Salt
+        amtNeeded: 1
+      mixing:
+      - name: Chop
+        amtNeeded: 5
+      - name: Cooking Pot
+        amtNeeded: 2
+    - name: Chicken Soup
+      image: {fileID: 21300000, guid: 5877db01e0a2a2a42b25f4387ff3406f, type: 3}
+      ingredients:
+      - name: Onion
+        amtNeeded: 2
+      - name: Chicken
+        amtNeeded: 3
+      - name: Stock
+        amtNeeded: 1
+      - name: spice-saffron
+        amtNeeded: 1
+      mixing:
+      - name: Chop
+        amtNeeded: 5
+      - name: Cooking Pot
+        amtNeeded: 2
+    - name: Pea and Ham Soup
+      image: {fileID: 21300000, guid: 0867cf00eb680b7409fbf9a5ae9914bd, type: 3}
+      ingredients:
+      - name: Peas
+        amtNeeded: 1
+      - name: Ham
+        amtNeeded: 2
+      - name: Stock
+        amtNeeded: 1
+      - name: Salt
+        amtNeeded: 1
+      - name: Pepper
+        amtNeeded: 1
+      mixing:
+      - name: Chop
+        amtNeeded: 5
+      - name: Cooking Pot
+        amtNeeded: 2
+    - name: Pumpkin Soup
+      image: {fileID: 21300000, guid: 5e2b1c4e114388d4fb899521e7890f2d, type: 3}
+      ingredients:
+      - name: Stock
+        amtNeeded: 1
+      - name: Pumpkin
+        amtNeeded: 4
+      - name: Cream
+        amtNeeded: 1
+      - name: Salt
+        amtNeeded: 1
+      - name: spice-cumin
+        amtNeeded: 1
+      mixing:
+      - name: Chop
+        amtNeeded: 5
+      - name: Cooking Pot
+        amtNeeded: 2
   - name: Main
     recipes:
     - name: Burger
@@ -4036,6 +4122,26 @@ MonoBehaviour:
       - name: Chop
         amtNeeded: 5
       - name: Toast
+        amtNeeded: 2
+    - name: Lasagne
+      image: {fileID: 21300000, guid: d32a9b88bee8db543b6d4384658563bc, type: 3}
+      ingredients:
+      - name: Pasta
+        amtNeeded: 4
+      - name: Beef
+        amtNeeded: 1
+      - name: White_Sauce
+        amtNeeded: 1
+      - name: Tomato
+        amtNeeded: 1
+      - name: Garlic
+        amtNeeded: 1
+      mixing:
+      - name: Fry
+        amtNeeded: 5
+      - name: Chop
+        amtNeeded: 5
+      - name: Oven
         amtNeeded: 2
   - name: Dessert
     recipes:

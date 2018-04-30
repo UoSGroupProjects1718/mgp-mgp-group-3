@@ -16,6 +16,8 @@ public class Ingredient : MonoBehaviour {
 
     public int pressesNeeded;
     public int timesPressed;
+
+    public bool redHerring = false;
     
     public enum ButtonTypes
     {
@@ -168,69 +170,77 @@ public class Ingredient : MonoBehaviour {
     public void IngredientPressed()
     {
 
-
-        if (GameManager.Instance().currentTurn == GameManager.Turns.Player1)
+        if (redHerring)
         {
-
-            foreach (var ingredient in GameManager.Instance().neededIngredientsP1)
-            {
-				Debug.Log ("poop");
-                if (ingredient.name == this.name)
-                {
-                    timesPressedBubble.SetActive(true);
-                    timesPressed++;
-                    timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
-                }
-            }
-
-            foreach (var ingredient in GameManager.Instance().neededMixingP1)
-            {
-                if (ingredient.name == this.name)
-                {
-                    if (timesPressedBubble != false)
-                        timesPressedBubble.SetActive(true);
-
-                    timesPressed++;
-
-                    if (timesPressedBubble != false)
-                        timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
-                }
-            }
+            timesPressedBubble.SetActive(true);
+            timesPressed++;
+            timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
         }
         else
         {
-            foreach (var ingredient in GameManager.Instance().neededIngredientsP2)
+            if (GameManager.Instance().currentTurn == GameManager.Turns.Player1)
             {
-                if (ingredient.name == this.name)
-                {
-                    timesPressedBubble.SetActive(true);
-                    timesPressed++;
-                    timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
-                }
-            }
 
-            foreach (var ingredient in GameManager.Instance().neededMixingP2)
-            {
-                if (ingredient.name == this.name)
+                foreach (var ingredient in GameManager.Instance().neededIngredientsP1)
                 {
-                    if (timesPressedBubble != false)
+                    Debug.Log("poop");
+                    if (ingredient.name == this.name)
+                    {
                         timesPressedBubble.SetActive(true);
-
-                    timesPressed++;
-
-                    if (timesPressedBubble != false)
+                        timesPressed++;
                         timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                    }
+                }
+
+                foreach (var ingredient in GameManager.Instance().neededMixingP1)
+                {
+                    if (ingredient.name == this.name)
+                    {
+                        if (timesPressedBubble != false)
+                            timesPressedBubble.SetActive(true);
+
+                        timesPressed++;
+
+                        if (timesPressedBubble != false)
+                            timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                    }
                 }
             }
-        }
+            else
+            {
+                foreach (var ingredient in GameManager.Instance().neededIngredientsP2)
+                {
+                    if (ingredient.name == this.name)
+                    {
+                        timesPressedBubble.SetActive(true);
+                        timesPressed++;
+                        timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                    }
+                }
 
-        if (buttonType == ButtonTypes.Ingredient)
-        {
-            GameManager.Instance().SetGivenAmt(id, timesPressed);
-        }
-        else
-        {
-            GameManager.Instance().SetGivenMixingAmt(id, timesPressed);
+                foreach (var ingredient in GameManager.Instance().neededMixingP2)
+                {
+                    if (ingredient.name == this.name)
+                    {
+                        if (timesPressedBubble != false)
+                            timesPressedBubble.SetActive(true);
+
+                        timesPressed++;
+
+                        if (timesPressedBubble != false)
+                            timesPressedBubble.GetComponentInChildren<Text>().text = timesPressed.ToString();
+                    }
+                }
+            }
+        
+            if (buttonType == ButtonTypes.Ingredient)
+            {
+                GameManager.Instance().SetGivenAmt(id, timesPressed);
+            }
+            else
+            {
+                GameManager.Instance().SetGivenMixingAmt(id, timesPressed);
+            }
         }
     }
 
